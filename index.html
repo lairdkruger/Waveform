@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Waveform Visualizer</title>
+        
+        <script src="src/canvas.js"></script>
+        <script src="src/creative_coding.js"></script>
+        <script src="src/mic.js"></script>
+        
+    </head>
+    
+    <body>
+        
+        <script>
+            //create canvas    
+            var ctx = createCanvas("canvas1");
+            
+            //double click fullscreen event listener
+            //Double Click to go FULLSCREEN
+            function getreqfullscreen(){
+                var root = document.documentElement
+                return root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen
+            }
+            
+            canvas.addEventListener('dblclick', function(){ 
+
+                //usage: getreqfullscreen().call(targetelement) // open full screen on targetelement
+            
+                var globalreqfullscreen = getreqfullscreen() // get supported version of requestFullscreen()
+            
+                globalreqfullscreen.call(document.documentElement);
+            });
+            
+            document.addEventListener('keypress', function (e) {
+                if (e.keyCode == 49) {
+                    //1: white on black
+                    line_colour = rgb(255, 255, 255);
+                    background_colour = 0;
+                } else if (e.keyCode == 50) {
+                    //2: black on white
+                    line_colour = rgb(0, 0, 0);
+                    background_colour = 255;
+                }
+            }, false);
+            
+            var mic = new Microphone(512);
+            ctx.lineWidth = 1.5;
+            
+            var num_points = 120;
+            var points = [];
+            
+            //colours
+            var background_colour = 0;
+            var line_colour = rgb(255);
+            
+            //push a point and its values into the array
+            for (var i = 0; i < num_points; i++) {
+                addPoint(i);
+            }
+            
+            
+            function addPoint(i) {
+                var point = {
+                x: map(i, 0, num_points - 1, 100, w - 100),
+                y: h/2,
+                }
+                
+                points.push(point);
+            }
+            
+            
+            function drawConnections() {
+                for (i = 0; i < num_points - 1; i++) {
+                    p1 = points[i];
+                    p2 = points[i + 1];
+                    
+                    //draw a line between neighboring points
+                    ctx.line(p1.x, p1.y, p2.x, p2.y);
+                }
+            }
+            
+            
+            function movePoint() {
+                for (i = 0; i < num_points; i++) {
+                    p = points[i];
+                    waveform = mic.mapWaveform(i, num_points, 0, h);
+                    
+                    p.y = h/2 + (waveform * 200);
+                }
+            }
+            
+            
+            //requests animation frame
+            function draw(){
+                frameRate = 120;
+                
+                //clear previous frame
+                ctx.background(background_colour, map(mic.getRMS(mic.spectrum), 0, 100, 0.25, 0.02));
+                ctx.strokeStyle = line_colour;
+                
+                movePoint();
+                drawConnections();
+            }
+            
+        </script>
+    </body>
+</html>
