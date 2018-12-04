@@ -1,5 +1,5 @@
 # Waveform Real-Time Sound Visualizer
-live demo at https://lairdkruger.github.io/Waveform/ 
+Live demo at https://lairdkruger.github.io/Waveform/ 
  
 - runs in chrome
 - a powerful computer (CPU) is recommended to minimise latency between the sound and the visuals
