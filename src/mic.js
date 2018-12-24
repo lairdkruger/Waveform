@@ -17,7 +17,7 @@ function Microphone(_fft) {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
 
-    window.addEventListener('load', init, false);
+    window.addEventListener('click', init, false);
 
     function init () {
         try {
@@ -72,8 +72,8 @@ function Microphone(_fft) {
     }
 
     ///////////////////////////////////////////////
-    ////////////// SOUND UTILITIES  //////////////
-    /////////////////////////////////////////////
+    ////////////// SOUND UTILITIES  ///////////////
+    ///////////////////////////////////////////////
     
     this.getWaveform = function() {
         //returns the time domain
