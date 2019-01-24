@@ -1,7 +1,5 @@
 <html>
     <head>
-        <meta name="author" content="Laird Kruger">
-        <meta name="description" content="Real-Time Sound Visualizer for Chrome">
         <meta charset="utf-8">
         <title>Waveform Visualizer</title>
         
@@ -14,96 +12,7 @@
     <body>
         
         <script>
-            //create canvas    
-            var ctx = createCanvas("canvas1");
-            
-            //double click fullscreen event listener
-            //Double Click to go FULLSCREEN
-            function getreqfullscreen(){
-                var root = document.documentElement
-                return root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen
-            }
-            
-            canvas.addEventListener('dblclick', function(){ 
-
-                //usage: getreqfullscreen().call(targetelement) // open full screen on targetelement
-            
-                var globalreqfullscreen = getreqfullscreen() // get supported version of requestFullscreen()
-            
-                globalreqfullscreen.call(document.documentElement);
-            });
-            
-            document.addEventListener('keypress', function (e) {
-                if (e.keyCode == 49) {
-                    //1: white on black
-                    line_colour = rgb(255, 255, 255);
-                    background_colour = 0;
-                } else if (e.keyCode == 50) {
-                    //2: black on white
-                    line_colour = rgb(0, 0, 0);
-                    background_colour = 255;
-                }
-            }, false);
-            
-            var mic = new Microphone(512);
-            ctx.lineWidth = 1.5;
-            
-            var num_points = 120;
-            var points = [];
-            
-            //colours
-            var background_colour = 0;
-            var line_colour = rgb(255);
-            
-            //push a point and its values into the array
-            for (var i = 0; i < num_points; i++) {
-                addPoint(i);
-            }
-            
-            
-            function addPoint(i) {
-                var point = {
-                x: map(i, 0, num_points - 1, 100, w - 100),
-                y: h/2,
-                }
-                
-                points.push(point);
-            }
-            
-            
-            function drawConnections() {
-                for (i = 0; i < num_points - 1; i++) {
-                    p1 = points[i];
-                    p2 = points[i + 1];
-                    
-                    //draw a line between neighboring points
-                    ctx.line(p1.x, p1.y, p2.x, p2.y);
-                }
-            }
-            
-            
-            function movePoint() {
-                for (i = 0; i < num_points; i++) {
-                    p = points[i];
-                    waveform = mic.mapWaveform(i, num_points, 0, h);
-                    
-                    p.y = h/2 + (waveform * 200);
-                }
-            }
-            
-            
-            //requests animation frame
-            function draw(){
-                frameRate = 120;
-                
-                //clear previous frame
-                ctx.background(background_colour, map(mic.getRMS(mic.spectrum), 0, 100, 0.25, 0.02));
-                ctx.strokeStyle = line_colour;
-                
-                movePoint();
-                drawConnections();
-            }
-            
+            var _0x3255=['dblclick','keypress','keyCode','push','mapWaveform','background','strokeStyle','canvas1','documentElement','requestFullscreen','webkitRequestFullscreen','mozRequestFullScreen','msRequestFullscreen','addEventListener'];(function(_0x4116fe,_0x16d32f){var _0x1186bf=function(_0x44e24f){while(--_0x44e24f){_0x4116fe['push'](_0x4116fe['shift']());}};_0x1186bf(++_0x16d32f);}(_0x3255,0xcb));var _0x6023=function(_0x1fcd55,_0x2dd95a){_0x1fcd55=_0x1fcd55-0x0;var _0x2492e3=_0x3255[_0x1fcd55];return _0x2492e3;};var ctx=createCanvas(_0x6023('0x0'));function getreqfullscreen(){var _0x4118ad=document[_0x6023('0x1')];return _0x4118ad[_0x6023('0x2')]||_0x4118ad[_0x6023('0x3')]||_0x4118ad[_0x6023('0x4')]||_0x4118ad[_0x6023('0x5')];}canvas[_0x6023('0x6')](_0x6023('0x7'),function(){var _0x3764b5=getreqfullscreen();_0x3764b5['call'](document[_0x6023('0x1')]);});document['addEventListener'](_0x6023('0x8'),function(_0x368c35){if(_0x368c35[_0x6023('0x9')]==0x31){line_colour=rgb(0xff,0xff,0xff);background_colour=0x0;}else if(_0x368c35[_0x6023('0x9')]==0x32){line_colour=rgb(0x0,0x0,0x0);background_colour=0xff;}},![]);var mic=new Microphone(0x200);ctx['lineWidth']=1.5;var num_points=0x78;var points=[];var background_colour=0x0;var line_colour=rgb(0xff);for(var i=0x0;i<num_points;i++){addPoint(i);}function addPoint(_0x208c51){var _0x2f52a5={'x':map(_0x208c51,0x0,num_points-0x1,0x64,w-0x64),'y':h/0x2};points[_0x6023('0xa')](_0x2f52a5);}function drawConnections(){for(i=0x0;i<num_points-0x1;i++){p1=points[i];p2=points[i+0x1];ctx['line'](p1['x'],p1['y'],p2['x'],p2['y']);}}function movePoint(){for(i=0x0;i<num_points;i++){p=points[i];waveform=mic[_0x6023('0xb')](i,num_points,0x0,h);p['y']=h/0x2+waveform*0xc8;}}function draw(){frameRate=0x78;ctx[_0x6023('0xc')](background_colour,map(mic['getRMS'](mic['spectrum']),0x0,0x64,0.25,0.02));ctx[_0x6023('0xd')]=line_colour;movePoint();drawConnections();}
         </script>
     </body>
 </html>
